@@ -1,8 +1,5 @@
-package org.example; // Specifies the location of the class in the project's package hierarchy
+package com.gmail.preaker18; // Specifies the location of the class in the project's package hierarchy
 
-import com.mysql.cj.jdbc.MysqlDataSource; // Importing the MysqlDataSource class for establishing a connection to the MySQL database
-
-import java.sql.*; // Importing the java.sql package which contains classes for accessing and processing data stored in a data source
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +21,7 @@ public class Main {
 //         dbUtils.addPost(postData);
 
     // Use the database connection to add a comment
-        List<String> commentData = Arrays.asList("This is a comment", "2023-05-10");
+        List<String> commentData = Arrays.asList("This is a comment too", "2023-05-10");
         dbUtils.addComment(commentData);
     }
 

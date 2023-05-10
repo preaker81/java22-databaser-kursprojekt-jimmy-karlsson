@@ -1,4 +1,4 @@
-package org.example;
+package com.gmail.preaker18;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
