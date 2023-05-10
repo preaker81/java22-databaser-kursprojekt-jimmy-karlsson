@@ -20,15 +20,14 @@ public class Main {
     public static void main(String[] args) {
 
 
-        getInput();
-
-
+//        getInput();
         InitializeDatabase(); // Calls the method to initialize the database connection
 //        createTable();
-        insertToTable();
+//        addPost();
+//        insertToTable();
     }
 
-    public static void getInput(){
+    public static void getInput() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Give name: ");
         String name = sc.nextLine();
@@ -90,7 +89,7 @@ public class Main {
             //Skapa ett statement object för att köra SQL-querys genom databaskopplingen
             Statement statement = connection.createStatement();
             //Skriv din query som du vill köra mot databasen.
-            String query = "CREATE TABLE IF NOT EXISTS users3 (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(75), email VARCHAR(50), created DATE, online BOOLEAN, phone VARCHAR(20), address VARCHAR(100));";
+            String query = "CREATE TABLE IF NOT EXISTS comments (id INT PRIMARY KEY AUTO_INCREMENT, message VARCHAR(400), post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, post_id INT);";
             //Kör SQL-query och returnera resultatet (Antalet påverkade rader returneras)
             int result = statement.executeUpdate(query);
             System.out.println("Result: " + result);
@@ -107,7 +106,7 @@ public class Main {
             Connection connection = GetConnection();
 
             // Prepare SQL statement with placeholders
-            String query = "INSERT INTO users3 (name, email, created, online, phone, address) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO users (name, email, created, online, phone, address) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
 
             // Set values for placeholders
@@ -128,4 +127,42 @@ public class Main {
             System.out.printf("failed!\n"); // Printing a message to indicate a failure in fetching the connection
         }
     }
+
+
+    static String[][] array = {
+            {"That's a profound thought. It's so true that we often fear the unknown.", "2023-05-01 12:00:00"},
+            {"I agree. We must seize the opportunities when they come.", "2023-05-02 12:00:00"},
+            {"That's deep. We often get so caught up in planning that we forget to live.", "2023-05-03 12:00:00"},
+            {"Sadly, it's the innocent who suffer most. We need more peace in the world.", "2023-05-04 12:00:00"},
+            {"Absolutely! A room without books feels so empty.", "2023-05-05 12:00:00"},
+            {"Couldn't agree more! We should always be true to ourselves.", "2023-05-06 12:00:00"},
+            {"Indeed, the universe's mysteries are endless, and human folly seems to be just as infinite.", "2023-05-07 12:00:00"},
+            {"So true! There's never enough time to read all the books we want to.", "2023-05-08 12:00:00"},
+            {"Yes! We should never be afraid to express ourselves authentically.", "2023-05-09 12:00:00"},
+            {"So true! Laughter really is the best medicine.", "2023-05-10 12:00:00"}
+    };
+
+
+    public static void addPost() {
+        for (String[] item : array) {
+            try (
+                    Connection connection = GetConnection();
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO comments (message, post_date) VALUES (?, ?)")
+            ) {
+                ps.setString(1, item[0]);  // post
+                ps.setString(2, item[1]);  // post_date
+
+                int result = ps.executeUpdate();
+                if (result > 0) {
+                    System.out.println("Insert successful!");
+                } else {
+                    System.out.println("Insert failed!");
+                }
+            } catch (Exception e) {
+                System.out.println("An error occurred!");
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
