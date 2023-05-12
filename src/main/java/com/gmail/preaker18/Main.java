@@ -12,17 +12,34 @@ public class Main {
 
         DatabaseUtils dbUtils = new DatabaseUtils("localhost", 3306, "testdblaragon", "root", "");
 
-    // Use the database connection to add a user
+        // Use the database connection to add a table with column structure
+//        dbUtils.createTable("test1", "id INT PRIMARY KEY AUTO_INCREMENT, message VARCHAR(400), post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, post_id INT");
+
+        // Use the database connection to add a user
 //         List<String> userData = Arrays.asList("John Doe", "johndoe@example.com", "2023-05-10", "false", "1234567890", "123 Main St");
 //         dbUtils.addUser(userData);
 
-    // Use the database connection to add a post
+        // Use the database connection to add a post
 //         List<String> postData = Arrays.asList("This is a post", "2023-05-10");
 //         dbUtils.addPost(postData);
 
-    // Use the database connection to add a comment
-        List<String> commentData = Arrays.asList("This is a comment too", "2023-05-10");
-        dbUtils.addComment(commentData);
+        // Use the database connection to add a comment
+//        List<String> commentData = Arrays.asList("This is a comment too", "2023-05-10");
+//        dbUtils.addComment(commentData);
+
+        // Use the database connection to get name and email from user
+//        dbUtils.getUserEmail();
+
+        // Use the database connection to get messages by post date from comments
+//        dbUtils.getCommentsDesc();
+
+        // Use the database connection to get messages from comments table based on online in users table
+//        dbUtils.getCommentsByOnlineUsers();
+
+        // Hämta antalet inlägg per användare efter ett visst datum med SQL. Returnera raderna med alias. Sortera datan efter antalet inlägg i fallande ordning.
+//        dbUtils.getPostsByUserAfterDateDesc("2023-05-04 00:00:00");
+
+        dbUtils.updateAddressByEmail("Detta är en uppdaterad adress 1", "björn@bergström.com");
     }
 
     public static void getInput() {
