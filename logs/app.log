@@ -1,0 +1,1 @@
+2023-05-16 15:16:s44 [main] INFO  com.gmail.preaker18.DatabaseUtil - Executing query: DELETE FROM comments WHERE id = ? with id: 12

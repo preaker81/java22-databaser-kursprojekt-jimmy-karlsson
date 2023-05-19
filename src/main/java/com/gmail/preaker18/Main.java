@@ -11,9 +11,37 @@ public class Main {
     public static void main(String[] args) {
 
         DatabaseUtils dbUtils = new DatabaseUtils("localhost", 3306, "testdblaragon", "root", "");
-
-        // Use the database connection to add a table with column structure
+        PopulateUsers populateUsers = new PopulateUsers("localhost", 3306, "testdblaragon", "root", "");
+        PopulatePosts populatePosts = new PopulatePosts("localhost", 3306, "testdblaragon", "root", "");
+        PopulateComments populateComments = new PopulateComments("localhost", 3306, "testdblaragon", "root", "");
+//        Use the database connection to add a table with column structure
 //        dbUtils.createTable("test1", "id INT PRIMARY KEY AUTO_INCREMENT, message VARCHAR(400), post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, post_id INT");
+
+
+//        Method for populating the database with specified amount of users.
+//        Use this if you need more users in the database.
+//        populateUsers.populateUsers(10);
+
+//        Method for populating the database with specific amount of posts.
+//        The created posts will not have a post_date that is before the connected users created date.
+//        The user_id will only be user id´s that actually exist in users.
+//        populatePosts.populatePosts(100);
+
+//        Method for populating the database with specific amount of comments.
+//        The created comments will not have a post_date that is before the connected posts post_date.
+//        The user_id will only be user id´s that actually exist in users.
+//        The post_id will only be user id´s that actually exist in posts.
+        populateComments.populateComments(100);
+
+
+
+
+
+
+
+
+
+
 
         // Use the database connection to add a user
 //         List<String> userData = Arrays.asList("John Doe", "johndoe@example.com", "2023-05-10", "false", "1234567890", "123 Main St");
@@ -39,7 +67,52 @@ public class Main {
         // Hämta antalet inlägg per användare efter ett visst datum med SQL. Returnera raderna med alias. Sortera datan efter antalet inlägg i fallande ordning.
 //        dbUtils.getPostsByUserAfterDateDesc("2023-05-04 00:00:00");
 
-        dbUtils.updateAddressByEmail("Detta är en uppdaterad adress 1", "björn@bergström.com");
+//        dbUtils.updateAddressByEmail("Detta är en uppdaterad adress 1", "björn@bergström.com");
+
+//        Update a comment that is has id and user_id
+//        dbUtils.updateComment(2, 2, "updated comment");
+
+//        Delete user in users based on email
+//        dbUtils.deleteUserByEmail("johndoe@example.com");
+
+//        Delete post based on id
+//        dbUtils.deletePostByID(12);
+
+//        Delete comment based on id
+//        dbUtils.deleteCommentByID(12);
+
+//        Get users that have posted atleast once
+//        dbUtils.getUserThatPosted();
+
+//        Get all posts that someone have commented on.
+//        dbUtils.getPostsThatHaveComments();
+
+//        Get posts that have more than 10 comments
+//        dbUtils.getPostsThatHaveTenOrMoreComments();
+
+//        Get all users that have not posted and is online
+//        dbUtils.getAllUsersThatHaveNotPosted();
+
+//        Get all posts that have comments from more than one user
+//        dbUtils.getAllPostsThatHaveCommentsFromMoreThanOneUser();
+
+//        Get all users that have posted on or after a given date
+//        dbUtils.getAllUsersThatHaveMadePostAfterGivenDate("2023-05-10");
+
+//        Update password for user with given ID
+//        dbUtils.updateUserPassword(1, "updated password");
+
+//        Delete deletes all posts by user
+//        dbUtils.deletePostByUserID(4);
+
+//        Update switches visible boolean in posts table based on given user id
+//        dbUtils.updatePostVisibilityByUser(1);
+
+//        Update switches the visibility of the comments to the same value of its posts owner
+//        dbUtils.updateCommentVisibilityByPostVisibility();
+
+
+
     }
 
     public static void getInput() {
