@@ -14,6 +14,7 @@ public class Main {
         PopulateUsers populateUsers = new PopulateUsers("localhost", 3306, "testdblaragon", "root", "");
         PopulatePosts populatePosts = new PopulatePosts("localhost", 3306, "testdblaragon", "root", "");
         PopulateComments populateComments = new PopulateComments("localhost", 3306, "testdblaragon", "root", "");
+
 //        Use the database connection to add a table with column structure
 //        dbUtils.createTable("test1", "id INT PRIMARY KEY AUTO_INCREMENT, message VARCHAR(400), post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, post_id INT");
 
@@ -31,16 +32,7 @@ public class Main {
 //        The created comments will not have a post_date that is before the connected posts post_date.
 //        The user_id will only be user id´s that actually exist in users.
 //        The post_id will only be user id´s that actually exist in posts.
-        populateComments.populateComments(100);
-
-
-
-
-
-
-
-
-
+//        populateComments.populateComments(100);
 
 
         // Use the database connection to add a user
@@ -112,7 +104,19 @@ public class Main {
 //        dbUtils.updateCommentVisibilityByPostVisibility();
 
 
+//        Gets all users that have posted and added a media to the post
+//        dbUtils.getAllUsersThatPostedAndAddedMediatoPost();
 
+//        Gets all media that have 10 or more likes and the name of the uploader.
+//        dbUtils.getMediaURLWithTenOrMoreLikes();
+
+
+//        Get all users name that have posted and added an image.
+//        dbUtils.getAllUsernamesThatPostedWithImage();
+
+
+//        Get all posts that have atleast one visible comment or is a post the given userID have posted.
+//        dbUtils.getAllVisiblePostsAndAllPostsUsersOwnPosts(12);
     }
 
     public static void getInput() {

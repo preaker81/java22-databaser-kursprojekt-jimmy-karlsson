@@ -502,6 +502,128 @@ public class DatabaseUtils extends DatabaseConnector {
         }
     }
 
+    public void addMedia(String URL, String file_type, String description, int user_id, int gallery_id) {
+        String query = "INSERT INTO media (URL, file_type, Description, user_id, gallery_id) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, URL);  // URL
+            ps.setString(2, file_type);  // file_type
+            ps.setString(3, description); // description
+            ps.setInt(4, user_id);  // user_id
+            ps.setInt(5, gallery_id); // gallery_id
+
+            int result = ps.executeUpdate();
+            if (result > 0) {
+                System.out.println("Insert successful!");
+            } else {
+                System.out.println("Insert failed!");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("An error occurred!");
+            e.printStackTrace();
+        }
+    }
+
+    public void getAllUsersThatPostedAndAddedMediatoPost() {
+        String query = "SELECT DISTINCT users.name " +
+                "FROM users " +
+                "JOIN posts ON users.id = posts.user_id " +
+                "WHERE posts.media_id IS NOT NULL";
+
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("An error occurred!");
+            e.printStackTrace();
+        }
+    }
+
+    public void getMediaURLWithTenOrMoreLikes() {
+        String query = "SELECT media.URL, media.likes, users.name AS owner_name " +
+                "FROM media " +
+                "JOIN users ON media.owner = users.id " +
+                "WHERE media.likes >= 10";
+
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                String url = resultSet.getString("URL");
+                int likes = resultSet.getInt("likes");
+                String ownerName = resultSet.getString("owner_name");
+
+                System.out.println("URL: " + url + ", Likes: " + likes + ", Owner Name: " + ownerName);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("An error occurred!");
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getAllUsernamesThatPostedWithImage() {
+        String query = "SELECT DISTINCT users.name " +
+                "FROM users " +
+                "JOIN posts ON users.id = posts.user_id " +
+                "JOIN media ON users.id = media.owner " +
+                "WHERE media.file_type = '.jpg'";
+
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("An error occurred!");
+            e.printStackTrace();
+        }
+    }
+
+    public void getAllVisiblePostsAndAllPostsUsersOwnPosts(int userID) {
+        String query = "SELECT DISTINCT p.* FROM posts p " +
+                "LEFT JOIN comments c ON p.id = c.post_id " +
+                "WHERE (c.visible = true OR p.user_id = ?) AND p.visible = true";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, userID);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String post = resultSet.getString("post");
+                Timestamp post_date = resultSet.getTimestamp("post_date");
+                int user_id = resultSet.getInt("user_id");
+                boolean visible = resultSet.getBoolean("visible");
+                int media_id = resultSet.getInt("media_id");
+
+                // Here you can print or use your data
+                System.out.println("ID: " + id + ", Post: " + post + ", Post Date: " + post_date + ", User ID: " + user_id + ", Visible: " + visible + ", Media ID: " + media_id);
+            }
+        } catch (SQLException e) {
+            System.out.println("An error occurred!");
+            e.printStackTrace();
+        }
+    }
 
 
 }
