@@ -35,6 +35,10 @@ public class Main {
 //        populateComments.populateComments(100);
 
 
+
+
+
+
         // Use the database connection to add a user
 //         List<String> userData = Arrays.asList("John Doe", "johndoe@example.com", "2023-05-10", "false", "1234567890", "123 Main St");
 //         dbUtils.addUser(userData);
@@ -117,6 +121,9 @@ public class Main {
 
 //        Get all posts that have atleast one visible comment or is a post the given userID have posted.
 //        dbUtils.getAllVisiblePostsAndAllPostsUsersOwnPosts(12);
+
+
+        dbUtils.updateHashedPassword();
     }
 
     public static void getInput() {

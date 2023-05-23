@@ -1,6 +1,7 @@
 package com.gmail.preaker18;
 
 import models.DatabaseConnector;
+import models.PasswordHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -622,6 +623,41 @@ public class DatabaseUtils extends DatabaseConnector {
         } catch (SQLException e) {
             System.out.println("An error occurred!");
             e.printStackTrace();
+        }
+    }
+
+    public void updateHashedPassword() {
+        // Select query to fetch all rows from the users table
+        String selectQuery = "SELECT id, password FROM users";
+        // Update query to update the hashed_pwd field for a given user id
+        String updateQuery = "UPDATE users SET hashed_pwd = ? WHERE id = ?";
+
+        try (Connection connection = getConnection();
+             Statement selectStatement = connection.createStatement();
+             PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+
+            // Execute the select query
+            ResultSet resultSet = selectStatement.executeQuery(selectQuery);
+
+            // Iterate over each row in the result set
+            while (resultSet.next()) {
+                // Get the id and password from the current row
+                int id = resultSet.getInt("id");
+                String password = resultSet.getString("password");
+
+                // Generate the hashed password using the PasswordHandler class
+                String hashedPassword = PasswordHandler.hashPassword(password);
+
+                // Set the parameters for the update statement
+                updateStatement.setString(1, hashedPassword);
+                updateStatement.setInt(2, id);
+
+                // Execute the update statement
+                updateStatement.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 
