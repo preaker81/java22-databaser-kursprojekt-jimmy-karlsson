@@ -5,6 +5,9 @@ import models.PasswordHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -19,6 +22,26 @@ public class DatabaseUtils extends DatabaseConnector {
     public DatabaseUtils(String url, int port, String database, String username, String password) {
         super(url, port, database, username, password);
     }
+
+    public class Config {
+        public static Properties loadProperties(String propFileName) {
+            Properties prop = new Properties();
+
+            try (InputStream inputStream = Config.class.getClassLoader().getResourceAsStream(propFileName)) {
+                if (inputStream != null) {
+                    prop.load(inputStream);
+                } else {
+                    throw new FileNotFoundException("Property file '" + propFileName + "' not found in the classpath");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return prop;
+        }
+    }
+
+
 
     // tableName: the name of the table to create.
     // columnChoices format example: id INT PRIMARY KEY AUTO_INCREMENT, message VARCHAR(400), post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, post_id INT

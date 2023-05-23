@@ -1,19 +1,22 @@
 package com.gmail.preaker18; // Specifies the location of the class in the project's package hierarchy
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    static List<String> valuesList = new ArrayList<>();
 
     public static void main(String[] args) {
 
-        DatabaseUtils dbUtils = new DatabaseUtils("localhost", 3306, "testdblaragon", "root", "");
-        PopulateUsers populateUsers = new PopulateUsers("localhost", 3306, "testdblaragon", "root", "");
-        PopulatePosts populatePosts = new PopulatePosts("localhost", 3306, "testdblaragon", "root", "");
-        PopulateComments populateComments = new PopulateComments("localhost", 3306, "testdblaragon", "root", "");
+        Properties prop = DatabaseUtils.Config.loadProperties("database.properties");
+        String hostname = prop.getProperty("hostname");
+        int port = Integer.parseInt(prop.getProperty("port"));
+        String dbname = prop.getProperty("dbname");
+        String username = prop.getProperty("username");
+        String password = prop.getProperty("password");
+
+        DatabaseUtils dbUtils = new DatabaseUtils(hostname, port, dbname, username, password);
+        PopulateUsers populateUsers = new PopulateUsers(hostname, port, dbname, username, password);
+        PopulatePosts populatePosts = new PopulatePosts(hostname, port, dbname, username, password);
+        PopulateComments populateComments = new PopulateComments(hostname, port, dbname, username, password);
 
 //        Use the database connection to add a table with column structure
 //        dbUtils.createTable("test1", "id INT PRIMARY KEY AUTO_INCREMENT, message VARCHAR(400), post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, post_id INT");
@@ -122,32 +125,10 @@ public class Main {
 //        Get all posts that have atleast one visible comment or is a post the given userID have posted.
 //        dbUtils.getAllVisiblePostsAndAllPostsUsersOwnPosts(12);
 
-
-        dbUtils.updateHashedPassword();
+//        Updates the hashed_pwd column in users with a hashed version of the value that is in the password column
+//        dbUtils.updateHashedPassword();
     }
 
-    public static void getInput() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Give name: ");
-        String name = sc.nextLine();
-        System.out.print("Give mail: ");
-        String mail = sc.nextLine();
-        System.out.print("Was created (Date): ");
-        String created = sc.nextLine();
-        System.out.print("Is online: ");
-        String online = sc.nextLine();
-        System.out.print("Give phonenumber: ");
-        String phone = sc.nextLine();
-        System.out.print("Give Adress:");
-        String address = sc.nextLine();
-
-        valuesList.add(name);
-        valuesList.add(mail);
-        valuesList.add(created);
-        valuesList.add(online);
-        valuesList.add(phone);
-        valuesList.add(address);
-    }
 
 }
 
